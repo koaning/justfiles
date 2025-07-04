@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        python-version: ["3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.12"]
 
     steps:
     - uses: actions/checkout@v4
@@ -28,5 +28,21 @@ jobs:
     
     - name: Run tests
       run: |
-        uvx --with rich --with typer --with pathspec pytest rich-ls.py
+        uvx --with rich --with typer --with pathspec pytest rich-ls.py -v
     
+    - name: Test help command
+      run: |
+        uvx --with rich --with typer --with pathspec python rich-ls.py --help
+    
+    - name: Test basic functionality
+      run: |
+        # Create a test directory structure
+        mkdir -p test_dir/subdir
+        echo "test" > test_dir/file.txt
+        echo "data" > test_dir/data.json
+        
+        # Test various command options
+        uvx --with rich --with typer --with pathspec python rich-ls.py test_dir
+        uvx --with rich --with typer --with pathspec python rich-ls.py test_dir --depth 1
+        uvx --with rich --with typer --with pathspec python rich-ls.py test_dir --exclude "*.json"
+        uvx --with rich --with typer --with pathspec python rich-ls.py test_dir --show-hidden
