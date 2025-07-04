@@ -44,7 +44,7 @@ extract file:
     fi
 
 # Kill process by port
-killport port:
+freeport port:
     lsof -ti:{{port}} | xargs kill -9
 
 # Show disk usage in human-readable format
