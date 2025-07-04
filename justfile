@@ -52,5 +52,5 @@ diskusage path=".":
     du -sh {{path}}/* | sort -hr | head -20
 
 # List the directory tree
-tree glob="**/*":
-    uv run {{justfile_directory()}}/rich-ls.py . --show-hidden --glob "{{glob}}"
+tree depth="1":
+    uv run {{justfile_directory()}}/rich-ls.py . --depth {{depth}} --gitignore
