@@ -58,5 +58,4 @@ tree depth="1":
 
 
 commit:
-    DIFF = git --no-pager diff | uvx llm "Write a commit message for the following git diff. The message needs to be 7 words max"
-    git commit -m "{{DIFF}}"
+    git commit -m "$(git --no-pager diff | uvx llm "Write a commit message for the following git diff. The message needs to be 7 words max. Keep it short and concise.")"
