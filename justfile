@@ -14,6 +14,7 @@ myip:
 
 # Write a new blog post
 [group('blog')]
+[working-directory: '/Users/vincentwarmerdam/Development/blog']
 write:
     uvx --from "python-dotenv[cli]" dotenv run -- uvx --with git+https://github.com/koaning/draft draft --write-folder /Users/vincentwarmerdam/Development/blog/content/posts/2025
 
@@ -54,3 +55,8 @@ diskusage path=".":
 # List the directory tree
 tree depth="1":
     uv run {{justfile_directory()}}/rich-ls.py . --depth {{depth}} --gitignore
+
+
+commit:
+    DIFF = git --no-pager diff | uvx llm "Write a commit message for the following git diff. The message needs to be 7 words max"
+    git commit -m "{{DIFF}}"
